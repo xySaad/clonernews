@@ -10,12 +10,10 @@ const liveUpdate = () => {
     setInterval(async () => {
         const id = await fetchApi("maxitem")
         if (lastId && id != lastId) {
-            console.log(id);
         }
         lastId = id
-    }, 5000);
+    }, 5000);   
 
-    return () => lastId
 }
 
 let posts = []
@@ -23,13 +21,12 @@ let posts = []
 const main = async () => {
     let id = await fetchApi("maxitem")
     let i = 0
-    let main = q('main')
+    let main = q('.posts')
     while (i < PAGE_SIZE) {
         const post = await fetchApi(`item/${id}`)
-        console.log(post);
         
         id--
-        if (post.type !== "comment") {
+        if (post && post.type !== "comment" && !post.dead) {
             i++
             main.append(await Post(post))
         }
