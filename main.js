@@ -18,12 +18,15 @@ const liveUpdate = () => {
 
     return () => lastId
 }
-const scroll = async (id, main) => {
-    let wH = window.screenY
-    let scly = document.body.clientHeight    
-    if (wH - scly < 10) {
+let fetching = false
+const scroll = throttle(async () => {
+
+    if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight * 0.9 && !fetching) {
+        fetching = !fetching
+        let id = [...document.querySelectorAll('.post')]
+        id = id[id.length - 1].id
         console.log(id);
-        
+        let main = q('.posts')
         let i = 0
         while (i < PAGE_SIZE) {
             const post = await fetchApi(`item/${id}`)
@@ -33,8 +36,10 @@ const scroll = async (id, main) => {
                 main.append(await Post(post))
             }
         }
+        fetching = !fetching
     }
-}
+
+}, 1000)
 
 let posts = []
 const main = async () => {
@@ -49,8 +54,8 @@ const main = async () => {
             main.append(await Post(post))
         }
     }
-    window.addEventListener('scroll', () => {        
-        scroll(id, main)
+    window.addEventListener('scroll', () => {
+        scroll()
     })
 }
 
