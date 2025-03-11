@@ -1,5 +1,25 @@
 @import url("./styles/post.css");
 
+
+* {
+  scrollbar-width: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   margin: 0;
   font-family: Inter;
@@ -29,6 +49,7 @@ main {
   gap: 24px;
   max-width: 100%;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .url {
