@@ -1,4 +1,4 @@
-import img, { div, p } from "../utils/createElement.js";
+import img, { div } from "../utils/createElement.js";
 import { timePassed } from "../utils/time.js";
 
 export const Post = async (pData) => {
@@ -14,7 +14,7 @@ export const Post = async (pData) => {
         ),
         div("cat", pData.type),
         div("title", pData.title),
-        p("text", pData.text),
+        div("text", pData.text),
         div("readmore", "Read more")
       )
     );

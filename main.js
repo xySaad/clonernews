@@ -1,61 +1,54 @@
 import { Post } from "./components/Post.js";
 import { fetchApi } from "./utils/fetchApi.js";
-import { throttle } from "./utils/throttle.js";
 const PAGE_SIZE = 10;
+
 const q = (selector) => document.querySelector(selector);
 
 const liveUpdate = () => {
-    let lastId;
-    setInterval(async () => {
-        const id = await fetchApi("maxitem");
-        if (lastId && id != lastId) {
-        }
-        lastId = id;
-    }, 5000);
+  let lastId;
+  setInterval(async () => {
+    const id = await fetchApi("maxitem");
+    if (lastId && id != lastId) {
+    }
+    lastId = id;
+  }, 5000);
+};
+
+const getPosts = async (id) => {
+  let i = 0;
+  let posts = q(".posts");
+  while (i < PAGE_SIZE) {
+    const post = await fetchApi(`item/${id}`);
+    id--;
+    if (post && post.type !== "comment" && !post.dead) {
+      i++;
+      posts.append(await Post(post));
+    }
+  }
 };
 
 let fetching = false;
 
-const scroll = async () => {
-    let main = q(".posts");
+const scroll = () => {
+  let fetching = false;
+  return async () => {
     if (fetching) {
-        return
+      return;
     }
     fetching = !fetching;
-    let id = [...document.querySelectorAll(".postContainer")];
-    id = id[id.length - 1].id;
-    console.log(id);
-
-    let i = 0;
-    while (i < PAGE_SIZE) {
-        const post = await fetchApi(`item/${id}`);
-        id--;
-        if (post.type !== "comment") {
-            i++;
-            main.append(await Post(post));
-        }
-    }
+    const id = document.querySelector(".posts").lastChild.id;
+    getPosts(id);
     fetching = !fetching;
+  };
 };
 
-let posts = [];
 const main = async () => {
-    let id = await fetchApi("maxitem");
-    let i = 0;
-    let posts = q(".posts");
-    while (i < PAGE_SIZE) {
-        const post = await fetchApi(`item/${id}`);
-        id--;
-        if (post && post.type !== "comment" && !post.dead) {
-            i++;
-            posts.append(await Post(post));
-        }
-    }
+  const id = await fetchApi("maxitem");
+  getPosts(id);
 
-    const throttledScroll = throttle(scroll, 1000);
-    console.log(1);
+  const s = scroll();
 
-    q('main').addEventListener("scroll", throttledScroll);
+  q("main").addEventListener("scroll", s);
 };
 
 main();
