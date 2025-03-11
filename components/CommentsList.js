@@ -7,9 +7,9 @@ export const Comment = (comment) => {
     div("publisher").append(
       img(null, "no-profile"),
       div("username", comment.by),
-      div("time", ` • ${timePassed(comment.time)}`)
+      div("time", ` • ${timePassed(comment.time*1000)}`)
     ),
-    div("text", comment.content)
+    div("text", comment.text)
   );
 };
 
@@ -17,7 +17,7 @@ export const CommentsList = (commentIds) => {
   const commentsList = div("commentsList");
 
   commentIds?.forEach(async (id) => {
-    const comment = await fetchApi(id);
+    const comment = await fetchApi(`item/${id}`);
     console.log(comment);
     
     if (comment.deleted) {

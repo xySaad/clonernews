@@ -1,4 +1,3 @@
-import { Post } from "./components/Post.js";
 import { PostCard } from "./components/PostCard.js";
 import { fetchApi } from "./utils/fetchApi.js";
 import { q } from "./utils/native.js";
@@ -14,18 +13,6 @@ const liveUpdate = () => {
   }, 5000);
 };
 
-const getPosts = async (id) => {
-  let i = 0;
-  let posts = q(".posts");
-  while (i < PAGE_SIZE) {
-    const post = await fetchApi(`item/${id}`);
-    id--;
-    if (post && post.type !== "comment" && !post.dead) {
-      i++;
-      posts.append(PostCard(post));
-    }
-  }
-};
 let posts = [];
 
 const scroll = async () => {
@@ -48,21 +35,19 @@ const scroll = async () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
-        throttledScroll();
+        scroll();
       }
     });
   }, options);
   observer.observe(Posts.lastChild);
 };
 
-const throttledScroll = throttle(scroll, 1000);
-
 const FetchPost = async (id) => {
   while (posts.length !== PAGE_SIZE) {
     const post = await fetchApi(`item/${id}`);
     id--;
-    if (post.type !== "comment" && !post.dead) {
-      posts.push(await Post(post));
+    if (post && post.type !== "comment" && !post.dead && !post.deleted) {
+      posts.push(PostCard(post));
     }
   }
 };
@@ -73,13 +58,13 @@ const main = async () => {
   while (i < PAGE_SIZE) {
     const post = await fetchApi(`item/${id}`);
     id--;
-    if (post && post.type !== "comment" && !post.dead) {
+    if (post && post.type !== "comment" && !post.dead && !post.deleted) {
       i++;
-      posts.append(await Post(post));
+      posts.append(PostCard(post));
     }
   }
   FetchPost(id);
-  throttledScroll();
+  scroll();
 };
 
 main();
