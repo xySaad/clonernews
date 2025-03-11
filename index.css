@@ -1,5 +1,6 @@
 @import url("./styles/post.css");
-
+@import url("./styles/postView.css");
+@import url('https://fonts.googleapis.com/css?family=Inter:700|Inter:400');
 
 * {
   scrollbar-width: none;

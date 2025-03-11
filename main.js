@@ -1,8 +1,8 @@
 import { Post } from "./components/Post.js";
+import { PostCard } from "./components/PostCard.js";
 import { fetchApi } from "./utils/fetchApi.js";
+import { div, q } from "./utils/native.js";
 const PAGE_SIZE = 10;
-
-const q = (selector) => document.querySelector(selector);
 
 const liveUpdate = () => {
   let lastId;
@@ -22,7 +22,7 @@ const getPosts = async (id) => {
     id--;
     if (post && post.type !== "comment" && !post.dead) {
       i++;
-      posts.append(await Post(post));
+      posts.append(PostCard(post));
     }
   }
 };
@@ -31,7 +31,7 @@ let fetching = false;
 
 const scroll = () => {
   let fetching = false;
-  return async () => {
+  return () => {
     if (fetching) {
       return;
     }

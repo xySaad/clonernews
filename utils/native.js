@@ -1,3 +1,17 @@
+const asyncAppend = async function (elm, ...children) {
+  Element.prototype.append.call(elm, ...await Promise.all(children));
+};
+
+export const q = (selector) => {
+  const element = document.querySelector(selector);
+
+  element.append = function (...children) {
+    asyncAppend(this, ...children);
+    return this;
+  };
+  return element;
+};
+
 export const ce = (tagName, className, textContent) => {
   const element = document.createElement(tagName);
   if (className) {
@@ -7,16 +21,16 @@ export const ce = (tagName, className, textContent) => {
     element.textContent = textContent;
   }
 
-  element.append = function (...childs) {
-    Element.prototype.append.call(this, ...childs);
+  element.append = function (...children) {
+    asyncAppend(this, ...children);
     return this;
   };
-  
+
   element.Id = function (id) {
     this.id = id;
     return this;
   };
-  
+
   return element;
 };
 
@@ -25,7 +39,7 @@ export const div = (className, textContent) =>
 
 const importSvg = (svgName) => (svgName ? "/svg/" + svgName + ".svg" : "");
 
-const img = (src, alt, className, id) => {
+export const img = (src, alt, className, id) => {
   const imgElement = document.createElement("img");
   imgElement.src = src ?? "";
   imgElement.alt = alt ?? "";
@@ -38,4 +52,3 @@ const img = (src, alt, className, id) => {
   };
   return imgElement;
 };
-export default img;
