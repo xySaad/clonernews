@@ -13,32 +13,48 @@ const liveUpdate = () => {
         lastId = id;
     }, 5000);
 };
-
-let fetching = false;
+let posts = [];
 
 const scroll = async () => {
-    let main = q(".posts");
-    if (fetching) {
-        return
+    let Posts = q(".posts");    
+    let l = posts.length
+    while (posts[0]) {
+        Posts.append(posts[0])
+        posts.splice(0, 1)
     }
-    fetching = !fetching;
-    let id = [...document.querySelectorAll(".postContainer")];
-    id = id[id.length - 1].id;
-    console.log(id);
+    if (l === PAGE_SIZE) {
+        FetchPost(Posts.lastChild.id)
+    }
+    const options = {
+        root: q('main'),
+        rootMargin: "0px",
+        threshold: 0.3,
+    };
 
-    let i = 0;
-    while (i < PAGE_SIZE) {
-        const post = await fetchApi(`item/${id}`);
-        id--;
-        if (post.type !== "comment") {
-            i++;
-            main.append(await Post(post));
-        }
-    }
-    fetching = !fetching;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                observer.unobserve(entry.target); 
+                throttledScroll(); 
+            }
+        });
+    }, options);
+    observer.observe(Posts.lastChild);
 };
 
-let posts = [];
+const throttledScroll = throttle(scroll, 1000);
+
+const FetchPost = async (id) => {
+    while (posts.length !== PAGE_SIZE) {
+        const post = await fetchApi(`item/${id}`);
+        id--;
+        if (post.type !== "comment" && !post.dead) {
+            posts.push(await Post(post));
+        }
+    }
+    ;
+
+}
 const main = async () => {
     let id = await fetchApi("maxitem");
     let i = 0;
@@ -51,11 +67,8 @@ const main = async () => {
             posts.append(await Post(post));
         }
     }
-
-    const throttledScroll = throttle(scroll, 1000);
-    console.log(1);
-
-    q('main').addEventListener("scroll", throttledScroll);
+    FetchPost(id)
+    throttledScroll()
 };
 
 main();
