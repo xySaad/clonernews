@@ -1,7 +1,7 @@
 export function timePassed(date) {
   const now = new Date();
   const pastDate = new Date(date);
-  
+
   const diff = now - pastDate;
 
   const seconds = Math.floor(diff / 1000);
@@ -28,3 +28,7 @@ export function timePassed(date) {
     return `${years} years ago`;
   }
 }
+
+export const sleep = (time) => new Promise((resolve) => {
+  setTimeout(resolve, time)
+})
