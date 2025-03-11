@@ -1,6 +1,6 @@
 import { fetchApi } from "../utils/fetchApi.js";
 import { timePassed } from "../utils/time.js";
-import { div, img } from "../utils/native.js";
+import { div, img, p } from "../utils/native.js";
 
 export const Comment = (comment) => {
   return div("comment").append(
@@ -9,7 +9,7 @@ export const Comment = (comment) => {
       div("username", comment.by),
       div("time", ` • ${timePassed(comment.time*1000)}`)
     ),
-    div("text", comment.text)
+    p("text", comment.text)
   );
 };
 

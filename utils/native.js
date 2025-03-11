@@ -52,3 +52,10 @@ export const img = (src, alt, className, id) => {
   };
   return imgElement;
 };
+
+export const p = (className, textContent)=>{
+  const pElement = ce("p")
+  p.className = className
+  pElement.innerHTML = textContent
+  return pElement
+}

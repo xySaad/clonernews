@@ -55,7 +55,7 @@ main {
 
 .url {
   cursor: pointer;
-  color: blue;
+  color: rgb(127, 182, 228);
 }
 
 .frame {

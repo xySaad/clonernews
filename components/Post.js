@@ -1,4 +1,4 @@
-import { img, div, q } from "../utils/native.js";
+import { img, div, q, p } from "../utils/native.js";
 import { timePassed } from "../utils/time.js";
 
 export const Post = (pData) => {
@@ -10,6 +10,7 @@ export const Post = (pData) => {
     ),
     div("cat", pData.type),
     div("title", pData.title),
-    div("text", pData.text)
+    p("text", pData.text),
+    div("url", pData.url)
   );
 };
