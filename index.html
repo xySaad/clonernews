@@ -4,29 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
     <title>Clone-News</title>
 </head>
-<table>
-    <tr>
-        <td id="nav">
-            <b>Clone-News</b>
-            <a href="">new</a> |
-            <a href="">past</a> |
-            <a href="">comments</a> |
-            <a href="">ask</a> |
-            <a href="">jobs</a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <h3 id="post-info">id • Post Title</h3>
-            <span id="points">999</span> points by <a href="#"><span id="username">User</span></a>
-            3 hours ago | <span id="comments">123</span> <a href="#">comments</a>
-        </td>
-    </tr>
-</table>
-<h5>No more posts</h5>
 
+<body>
+    <main>
+        <table>
+            <tr>
+                <td id="nav">
+                    <b>Clone-News</b>
+                    <a href="">new</a> |
+                    <a href="">past</a> |
+                    <a href="">comments</a> |
+                    <a href="">ask</a> |
+                    <a href="">jobs</a>
+                </td>
+            </tr>
+            <tr class="posts">
+                <td>
+                    <h3 id="post-info">id • Post Title</h3>
+                    <span id="points">999</span> points by <a href="#"><span id="username">User</span></a>
+                    3 hours ago | <span id="comments">123</span> <a href="#">comments</a>
+                </td>
+            </tr>
+        </table>
+    </main>
+    <script type="module" src="./main.js"></script>
+    <h5>No more posts</h5>
+</body>
 
 </html>
