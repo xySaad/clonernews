@@ -1,0 +1,20 @@
+.post {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: rgb(134, 122, 106);
+    gap: 10px;
+    padding: 50px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+.type {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+.url {
+    cursor: pointer;
+    color: blue;
+}
