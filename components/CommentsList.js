@@ -18,8 +18,6 @@ export const CommentsList = (commentIds) => {
 
   commentIds?.forEach(async (id) => {
     const comment = await fetchApi(`item/${id}`);
-    console.log(comment);
-    
     if (comment.deleted) {
       return
     }
