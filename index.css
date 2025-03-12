@@ -1,8 +1,12 @@
 @import url("./styles/post.css");
 @import url("./styles/postView.css");
+@import url("./styles/animations.css");
 @import url('https://fonts.googleapis.com/css?family=Inter:700|Inter:400');
 
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   scrollbar-width: none;
 }
 
@@ -21,8 +25,8 @@
   background: #555;
 }
 
+
 body {
-  margin: 0;
   font-family: Inter;
   font-size: 0.75rem;
   font-weight: 400;
@@ -32,7 +36,6 @@ body {
   background-size: cover;
   overflow: hidden;
   height: 100%;
-  color: white;
 }
 
 main {
@@ -50,7 +53,7 @@ main {
   gap: 24px;
   max-width: 100%;
   align-items: center;
-  margin-bottom: 10px;
+  margin: 150px 0 10px 0;
 }
 
 .url {
@@ -114,4 +117,16 @@ main {
   border-radius: 0 0 0 24px;
   bottom: 0;
   border-top: none;
+}
+
+@keyframes WOAH {
+  0% {
+    transform: perspective(0);
+    height: 75px;
+  }
+
+  100% {
+    transform: scale(2) perspective(10px);
+    height: 25px;
+  }
 }

@@ -23,9 +23,7 @@
     width: 80vw;
     height: 80vh;
     margin: auto;
-
 }
-
 
 .postView .post>img {
     width: 100%;
@@ -52,8 +50,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-
 
 .postView .commentsWrap {
     display: flex;
